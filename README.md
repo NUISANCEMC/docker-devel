@@ -85,7 +85,7 @@ Setting up NUISANCE docker developer.
 Developer Tag : nuisancemc/nuisancedevel
 Version Tag   :
 Mount Point   : /Users/patrickstowell/NUISANCEMC/
-Mount Options : :cached
+Mount Options : 
 Run Command   : 'nuisancedevel'
 
 [HostOS]$ cp scripts/unpack.sh	$NUISANCE_MOUNT/unpack.sh
