@@ -32,45 +32,25 @@ Mount Options : :cached
 Run Command   : 'nuisancedevel'
 ```
 
-Next, run the `build.sh` script to pull the devel image from docker hub and make the mount point folder if not already created.
+Next, run the `build.sh` script to pull the developer image and dependencies from docker hub and make the mount point folder if not already created.
 ```
 $ source build.sh
-Pulling docker image from docker hub
-docker pull nuisancemc/nuisancedevel:latest
-latest: Pulling from nuisancemc/nuisancedevel
-d9aaf4d82f24: Pull complete
-87c609607de1: Downloading [=====================>                             ]  79.99MB/188.8MB
-d4767c61d4c8: Downloading [=============================>                     ]  92.96MB/159MB
-2b6b5241c396: Download complete
-a2555975cf39: Download complete
-f452462d594d: Downloading [===============>                                   ]   11.3MB/37.02MB
-a198305d6741: Waiting
+ASDASDAS
 ```
-wait for the images to be downloaded, until eventually all downloads and extractions are complete.
+when all that is finished you should see the message
 ```
-$ source build.sh
-Pulling docker image from docker hub
-docker pull nuisancemc/nuisancedevel:latest
-latest: Pulling from nuisancemc/nuisancedevel
-d9aaf4d82f24: Pull complete
-87c609607de1: Pull complete
-d4767c61d4c8: Pull complete
-2b6b5241c396: Pull complete
-a2555975cf39: Pull complete
-f452462d594d: Pull complete
-a198305d6741: Pull complete
-Digest: sha256:1f7fd2e4e53d0177f36689221940976d1e0da88db1a0e00a4747dfb67ee59ea6
-Status: Downloaded newer image for nuisancemc/nuisancedevel:latest
+SDASDS
 ```
 
-Finally, test the docker container actually runs by using the `nuisancedevel` alias. You should be able to see all the files inside your mount point from the starting working directory of the container and nuisance should already be setup.
+
+Finally, test the docker container actually runs by using the `nuisancedevel` alias. You should be able to see all the files inside your mount point from the starting working directory of the container.
 ```
 $ nuisancedevel
 [root@dea96e00379d NUISANCEMC]#
 ```
 
 ### Unpacking NUISANCE 
-Now that you have a way to run the nuisance developer image, you can build NUISANCE as if you are on a CentOS machine with all the required system dependencies alraedy installed. Building the required generators + ROOT is quite time consuming however, and it is easier to download and unpack a prebuilt version from our precompiled CentOS binaries.
+Now that you have a way to run the nuisance developer image, you can build NUISANCE inside it as if you are on a CentOS machine with all the required system dependencies alraedy installed. Building the required generators + ROOT is quite time consuming however, and it is easier to download and unpack a prebuilt version from our precompiled CentOS binaries.
 
 A handy "unpack" script is provided to do this aswell as recompile NUISANCE-v2r8 for you.
 
@@ -105,9 +85,49 @@ Downloading pre-built NUISANCE-docker-devel tarball to current directory
 
 ...
 
+-- The C compiler identification is GNU 4.8.5
+-- The CXX compiler identification is GNU 4.8.5
+-- Check for working C compiler: /usr/bin/cc
+-- Check for working C compiler: /usr/bin/cc -- works
+
+...
+
+[DEBUG]: Configuring directory: src/Smearceptance
+[DEBUG]: Module targets: Routines;FCN;expANL;expArgoNeuT;expBEBC;expBNL;expElectron;expFNAL;expGGM;expK2K;expMINERvA;expMiniBooNE;expSciBooNE;expT2K;MCStudies;NuisGenie;FitBase;InputHandler;Splines;Reweight;Utils;Smearceptance
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /Users/patrickstowell/NUISANCEMC/test/nuisance-v2r8-gcc4.8.5-centos7/nuisance-v2r8/build
+Scanning dependencies of target Routines
+[  1%] Building CXX object src/Routines/CMakeFiles/Routines.dir/ComparisonRoutines.cxx.o
+[  1%] Building CXX object src/Routines/CMakeFiles/Routines.dir/SystematicRoutines.cxx.o
+
+...
+
+
+```
+If the script managed to get to a stage where each of the build files are installed like the one below, then NUISANCE built successfully.
+```
+SADSAD
 ```
 
+With a working NUISANCE build, the "setupnuisance.sh" script located in the original unpacked folder will setup everything required to run NUISANCE after starting up the NUISANCE docker developer image.
+```
+$ nuisancedevel
+[root@dea96e00379d NUISANCEMC]# ls
+docker-devel   nuisance-v2r8-gcc4.8.5-centos7   unpack
+[root@dea96e00379d NUISANCEMC]# cd nuisance-v2r8-gcc4.8.5-centos7
+[root@25a1cb41c517 nuisance-v2r8-gcc4.8.5-centos7]# ls
+lhapdf  libxml2-install  log4cpp  nuisance-v2r8  pythia6  R-2_12_6  root  scripts  setupnuisance.sh  v11q-reweight
+[root@25a1cb41c517 nuisance-v2r8-gcc4.8.5-centos7]# source setupnuisance.sh
+```
 
+So to test you have a working build run the following commands
+```
+$ nuisancedevel
+[root@dea96e00379d NUISANCEMC]#	cd nuisance-v2r8-gcc4.8.5-centos7
+[root@25a1cb41c517 nuisance-v2r8-gcc4.8.5-centos7]# source setupnuisance.sh
+[root@25a1cb41c517 nuisance-v2r8-gcc4.8.5-centos7]# nuiscomp -h
+```
 
 ### Run Instructions
 First setup the docker-devel environement by sourcing the setup.sh script.
