@@ -18,7 +18,7 @@ export NUISANCE_MOUNT="$HOME/NUISANCEMC/"
 # Set Mount options. cached is availble to speed things up
 # in the Docker for Mac edge version. Leave this commented out
 # if you don't understand what it does.
-export NUISANCE_MOUNT_OPTIONS=":cached"
+#export NUISANCE_MOUNT_OPTIONS=":cached"
 
 echo "Developer Tag : $NUISANCE_DOCKERCLIENT"
 echo "Version Tag   : $NUISANCE_DOCKERVER"

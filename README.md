@@ -7,9 +7,15 @@ Docker must be installed before using these scripts and root access is required 
 
 The NUISANCE Docker Developer image is just a wrapper around your current terminal that makes it behave as if its CentOS7 and lets you navigate a NUISANCE build directory on your current machine.
 
+### Prequisites
+To actually run and use NUISANCE you will need the following things installed on your host machine
+- Docker : See above for links for this
+- ROOT : To analyse NUISANCE outputs graphically you will still need a local installation of ROOT on your host machine. Note this will end up being different to the one used by NUISANCE inside the docker image. Any version of ROOT 5+ should be sufficient as all you need it for is to open standard ROOT files. Pre-compiled binaries for many machines can be found here: https://root.cern.ch/content/release-61008
+
+
 ### Setup Instructions
 First, edit the setup.sh script to choose a valid mount point. The Default is set to `$HOME/NUISANCEMC`.
-You should choose somewhere you have read/write access as this is where you will be storing MC files for the nuisance client.
+You should choose somewhere you have read/write access as this is where you will be storing the NUISANCE files.
 ```
 [HostOS]$ cd docker
 [HostOS]$ emacs -nw setup.sh
@@ -20,7 +26,7 @@ You should choose somewhere you have read/write access as this is where you will
 export NUISANCE_MOUNT="$HOME/NUISANCEMC/"
 ```
 
-Next, run the `setup.sh` script to setup environement
+Next, run the `setup.sh` script to setup your environement
 ``` 
 [HostOS]$ source setup.sh 
 Setting up NUISANCE docker developer.
@@ -28,7 +34,7 @@ Setting up NUISANCE docker developer.
 Developer Tag : nuisancemc/nuisancedevel
 Version Tag   :
 Mount Point   : /Users/patrickstowell/NUISANCEMC/
-Mount Options : :cached
+Mount Options : 
 Run Command   : 'nuisancedevel'
 ```
 
@@ -46,7 +52,7 @@ SDASDS
 Finally, test the docker container actually runs by using the `nuisancedevel` alias. You should be able to see all the files inside your mount point from the starting working directory of the container.
 ```
 [HostOS]$ nuisancedevel
-[root@dea96e00379d NUISANCEMC]#
+[DevlOS]#
 ```
 
 ### Unpacking NUISANCE 
@@ -103,7 +109,22 @@ Scanning dependencies of target Routines
 
 ...
 
+[100%] Building CXX object src/Tests/CMakeFiles/ParserTests.dir/ParserTests.cxx.o
+Linking CXX executable ParserTests
+[100%] Built target ParserTests
+Scanning dependencies of target SignalDefTests
+[100%] Building CXX object src/Tests/CMakeFiles/SignalDefTests.dir/SignalDefTests.cxx.o
+Linking CXX executable SignalDefTests
+[100%] Built target SignalDefTests
 
+...
+
+-- Installing: /Users/patrickstowell/NUISANCEMC/docker-devel/nuisance-v2r8-gcc4.8.5-centos7/nuisance-v2r8/build/Linux/bin/nuisbayes
+-- Installing: /Users/patrickstowell/NUISANCEMC/docker-devel/nuisance-v2r8-gcc4.8.5-centos7/nuisance-v2r8/build/Linux/bin/PrepareGENIE
+-- Installing: /Users/patrickstowell/NUISANCEMC/docker-devel/nuisance-v2r8-gcc4.8.5-centos7/nuisance-v2r8/build/Linux/bin/PrepareNuwro
+-- Installing: /Users/patrickstowell/NUISANCEMC/docker-devel/nuisance-v2r8-gcc4.8.5-centos7/nuisance-v2r8/build/Linux/tests/SignalDefTests
+-- Installing: /Users/patrickstowell/NUISANCEMC/docker-devel/nuisance-v2r8-gcc4.8.5-centos7/nuisance-v2r8/build/Linux/tests/ParserTests
+[DevlOS]#
 ```
 If the script managed to get to a stage where each of the build files are installed like the one below, then NUISANCE built successfully.
 ```
@@ -151,7 +172,7 @@ $ nuisancedevel
 [INFO]: Adding NuWro library paths to the environment.
 [INFO]: Adding PYTHIA6 library paths to the environment.
 [INFO]: Adding GENIE paths to the environment.
-[root@dea96e00379d NUISANCEMC]#
+[DevlOS]#
 ```
 You should be able to see the files you copied to the $NUISANCE_MOUNT area.
 ```
