@@ -91,7 +91,7 @@ Run Command   : 'nuisancedevel'
 [HostOS]$ cp scripts/unpack.sh	$NUISANCE_MOUNT/unpack.sh
 ```
 
-Next, we want to load up the dockerdevel environment and navigate to where we placed the "unpack" script.
+Next, we want to load up the nuisancedevel environment and navigate to where we placed the "unpack" script.
 ```
 [HostOS]$ nuisancedevel
 [DevlOS]# ls
@@ -168,7 +168,7 @@ So to test you have a working build run the following commands
 nuiscomp : NUISANCE Data Comparison App
 ```
 
-### Run Instructions
+## Run Instructions
 First setup the docker-devel environement by sourcing the setup.sh script.
 ```
 [HostOS]$ source docker-devel/docker/setup.sh
@@ -204,11 +204,21 @@ Now NUISANCE can be used inside the developer image as normal
 $ nuisflat -i GENIE:/Users/patrickstowell/NUISANCEMC/mygeniefile.root -n 100000 -f GenericFlux -o flatgeniefile.root
 ```
 
-## Analysing NUISANCE Outputs
+### Analysing NUISANCE Outputs
 The docker image can't handle ROOT's graphical output. So if we want to analyse the NUISANCE outputs we have to open a new terminal tab in the HostOS and open the file in ROOT there. This is possible because we mount the directory $NUISANCE_MOUNT into the docker image so that both the HostOS and DevlOS have access to it.
 
-In a new teminal with ROOT setup on the HostOS we can 
-
+In a new teminal with ROOT setup on the HostOS we can change directory into the mount point.
+```
+[HostOS]$ source docker-devel/docker/setup.sh
+[HostOS]$ cd $NUISANCE_MOUNT
+[HostOS]$ ls *.root
+mygeniefile.root flatgeniefile.root
+```
+Then we can just open or handle the file outputs as normal on the HostOS
+```
+[HostOS]$ root flatgeniefile.root
+root [0] TBrowser b;
+```
 
 ## Linux docker
 If docker is installed on your Linux machine it is possible to pull and run these images provided you replace 
