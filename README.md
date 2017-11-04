@@ -12,9 +12,12 @@ To actually run and use NUISANCE you will need the following things installed on
 - Docker : See above for links for this
 - ROOT : To analyse NUISANCE outputs graphically you will still need a local installation of ROOT on your host machine. Note this will end up being different to the one used by NUISANCE inside the docker image. Any version of ROOT 5+ should be sufficient as all you need it for is to open standard ROOT files. Pre-compiled binaries for many machines can be found here: https://root.cern.ch/content/release-61008
 
-
 ### Setup Instructions
-First, edit the setup.sh script to choose a valid mount point. The Default is set to `$HOME/NUISANCEMC`.
+Before we start, we should define some labels to make things clear.
+- HostOS : This is your normal operating system. So on a Mac this is what you see when you open a standard terminal.
+- DevlOS : This is the NUISANCE docker image. When we load up the image you will notice it slightly changes the terminal line, in a similar manner to how when we open python on the terminal it changes the prompt from "$" to ">>>". Use this behaviour to tell whether you should be in a normal terminal or the NUISANCE Developer developer environment. The best way to think about the DevlOS is as restricted terminal shell similar to interactive python or ROOT sessions.
+
+To begin we want to edit the setup.sh script to choose a valid mount point. The Default is set to `$HOME/NUISANCEMC`.
 You should choose somewhere you have read/write access as this is where you will be storing the NUISANCE files.
 ```
 [HostOS]$ cd docker/
@@ -144,7 +147,7 @@ If the script managed to get to a stage where each of the build files are instal
 
 With a working NUISANCE build, the "setupnuisance.sh" script located in the original unpacked folder will setup everything required to run NUISANCE after starting up the NUISANCE docker developer image.
 ```
-$ nuisancedevel
+[HostOS]$ nuisancedevel
 [DevlOS]# ls
 docker-devel   nuisance-v2r8-gcc4.8.5-centos7   unpack
 [DevlOS]# cd nuisance-v2r8-gcc4.8.5-centos7
@@ -155,7 +158,7 @@ lhapdf  libxml2-install  log4cpp  nuisance-v2r8  pythia6  R-2_12_6  root  script
 
 So to test you have a working build run the following commands
 ```
-$ nuisancedevel
+[HostOS]$ nuisancedevel
 [DevlOS]# cd nuisance-v2r8-gcc4.8.5-centos7
 [DevlOS]# source setupnuisance.sh
 [DevlOS]# nuiscomp -h
@@ -195,8 +198,14 @@ Once you log in you will need to setup NUISANCE by sourcing the setup script we 
 ```
 Now NUISANCE can be used inside the developer image as normal
 ```
-$ nuisflat -i GENIE:mygeniefile.root -n 100000 -f GenericFlux -o flatgeniefile.root
+$ nuisflat -i GENIE:/Users/patrickstowell/NUISANCEMC/mygeniefile.root -n 100000 -f GenericFlux -o flatgeniefile.root
 ```
+
+## Analysing NUISANCE Outputs
+The docker image can't handle ROOT's graphical output. So if we want to analyse the NUISANCE outputs we have to open a new terminal tab in the HostOS and open the file in ROOT there. This is possible because we mount the directory $NUISANCE_MOUNT into the docker image so that both the HostOS and DevlOS have access to it.
+
+In a new teminal with ROOT setup on the HostOS we can 
+
 
 ## Linux docker
 If docker is installed on your Linux machine it is possible to pull and run these images provided you replace 
