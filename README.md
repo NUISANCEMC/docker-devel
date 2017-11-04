@@ -17,7 +17,7 @@ To actually run and use NUISANCE you will need the following things installed on
 First, edit the setup.sh script to choose a valid mount point. The Default is set to `$HOME/NUISANCEMC`.
 You should choose somewhere you have read/write access as this is where you will be storing the NUISANCE files.
 ```
-[HostOS]$ cd docker
+[HostOS]$ cd docker/
 [HostOS]$ emacs -nw setup.sh
 
 # Set docker mounting point (default is $HOME/NUISANCEMC)
@@ -41,13 +41,22 @@ Run Command   : 'nuisancedevel'
 Next, run the `build.sh` script to pull the developer image and dependencies from docker hub and make the mount point folder if not already created.
 ```
 [HostOS]$ source build.sh
-ASDASDAS
+Building Docker OS Terminal Wrapper
+Sending build context to Docker daemon  6.144kB
+Step 1/3 : FROM centos:7
+7: Pulling from library/centos
+d9aaf4d82f24: Downloading [=========>                                         ]   13.5MB/73.39MB
 ```
 when all that is finished you should see the message
 ```
-SDASDS
-```
+Complete!
 
+ ---> ab0992b8ca8a
+Removing intermediate container 92cc8526ded9
+Removing intermediate container e39988e0852d
+Successfully built ab0992b8ca8a
+Successfully tagged nuisancemc/nuisancedevel:latest
+```
 
 Finally, test the docker container actually runs by using the `nuisancedevel` alias. You should be able to see all the files inside your mount point from the starting working directory of the container.
 ```
@@ -128,7 +137,9 @@ Linking CXX executable SignalDefTests
 ```
 If the script managed to get to a stage where each of the build files are installed like the one below, then NUISANCE built successfully.
 ```
-SADSAD
+-- Installing: /Users/patrickstowell/NUISANCEMC/docker-devel/nuisance-v2r8-gcc4.8.5-centos7/nuisance-v2r8/build/Linux/bin/PrepareNuwro
+-- Installing: /Users/patrickstowell/NUISANCEMC/docker-devel/nuisance-v2r8-gcc4.8.5-centos7/nuisance-v2r8/build/Linux/tests/SignalDefTests
+-- Installing: /Users/patrickstowell/NUISANCEMC/docker-devel/nuisance-v2r8-gcc4.8.5-centos7/nuisance-v2r8/build/Linux/tests/ParserTests
 ```
 
 With a working NUISANCE build, the "setupnuisance.sh" script located in the original unpacked folder will setup everything required to run NUISANCE after starting up the NUISANCE docker developer image.
@@ -148,15 +159,16 @@ $ nuisancedevel
 [DevlOS]# cd nuisance-v2r8-gcc4.8.5-centos7
 [DevlOS]# source setupnuisance.sh
 [DevlOS]# nuiscomp -h
+nuiscomp : NUISANCE Data Comparison App
 ```
 
 ### Run Instructions
 First setup the docker-devel environement by sourcing the setup.sh script.
 ```
-$ source setup.sh
+[HostOS]$ source docker-devel/docker/setup.sh
 Setting up NUISANCE docker devel.
 
-Devel Tag    : nuisancemc/nuisancedevel
+Developer Tag : nuisancemc/nuisancedevel
 Version Tag   : :latest
 Mount Point   : /Users/patrickstowell/NUISANCEMC/
 Mount Options :
@@ -164,14 +176,11 @@ Run Command   : 'nuisancedevel'
 ```
 To use the docker container you should place any files required inside the $NUISANCE_MOUNT point you defined in the setup script before you run the container.
 ```
-$ cp mygeniefile.root $NUISANCE_MOUNT/
+[HostOS]$ cp mygeniefile.root $NUISANCE_MOUNT/
 ```
 Once you are happy that the required files are located in that folder you can run the container using the alias
 ```
-$ nuisancedevel
-[INFO]: Adding NuWro library paths to the environment.
-[INFO]: Adding PYTHIA6 library paths to the environment.
-[INFO]: Adding GENIE paths to the environment.
+[HostOS]$ nuisancedevel
 [DevlOS]#
 ```
 You should be able to see the files you copied to the $NUISANCE_MOUNT area.
@@ -179,13 +188,15 @@ You should be able to see the files you copied to the $NUISANCE_MOUNT area.
 $ ls $PWD/*.root
 /Users/patrickstowell/NUISANCEMC/mygeniefile.root
 ```
-NUISANCE is already setup when you log in so you can use any of the standard applications.
+Once you log in you will need to setup NUISANCE by sourcing the setup script we used in the previous section.
 ```
-$ which nuiscomp 
-/NUISANCEMC/nuisance/v2r6/build/Linux/bin/nuiscomp
+[DevlOS]# cd nuisance-v2r8-gcc4.8.5-centos7
+[DevlOS]# source setupnuisance.sh
+```
+Now NUISANCE can be used inside the developer image as normal
+```
 $ nuisflat -i GENIE:mygeniefile.root -n 100000 -f GenericFlux -o flatgeniefile.root
 ```
-
 
 ## Linux docker
 If docker is installed on your Linux machine it is possible to pull and run these images provided you replace 
