@@ -11,8 +11,8 @@ The NUISANCE Docker Developer image is just a wrapper around your current termin
 First, edit the setup.sh script to choose a valid mount point. The Default is set to `$HOME/NUISANCEMC`.
 You should choose somewhere you have read/write access as this is where you will be storing MC files for the nuisance client.
 ```
-$ cd docker
-$ emacs -nw setup.sh
+[HostOS]$ cd docker
+[HostOS]$ emacs -nw setup.sh
 
 # Set docker mounting point (default is $HOME/NUISANCEMC)
 # This can be anywhere you have read/write access and will be
@@ -22,7 +22,7 @@ export NUISANCE_MOUNT="$HOME/NUISANCEMC/"
 
 Next, run the `setup.sh` script to setup environement
 ``` 
-$ source setup.sh 
+[HostOS]$ source setup.sh 
 Setting up NUISANCE docker developer.
 
 Developer Tag : nuisancemc/nuisancedevel
@@ -34,7 +34,7 @@ Run Command   : 'nuisancedevel'
 
 Next, run the `build.sh` script to pull the developer image and dependencies from docker hub and make the mount point folder if not already created.
 ```
-$ source build.sh
+[HostOS]$ source build.sh
 ASDASDAS
 ```
 when all that is finished you should see the message
@@ -45,7 +45,7 @@ SDASDS
 
 Finally, test the docker container actually runs by using the `nuisancedevel` alias. You should be able to see all the files inside your mount point from the starting working directory of the container.
 ```
-$ nuisancedevel
+[HostOS]$ nuisancedevel
 [root@dea96e00379d NUISANCEMC]#
 ```
 
@@ -56,9 +56,9 @@ A handy "unpack" script is provided to do this aswell as recompile NUISANCE-v2r8
 
 First, we want to copy the NUISANCE "scripts/unpack.sh" script to wherever we want to build NUISANCE, which must be somewhere inside our mount point defined earlier.
 ```
-$ ls
+[HostOS]$ ls
 README.md   docker   scripts
-$ source docker/setup.sh
+[HostOS]$ source docker/setup.sh
 Setting up NUISANCE docker developer.
 
 Developer Tag : nuisancemc/nuisancedevel
@@ -67,19 +67,19 @@ Mount Point   : /Users/patrickstowell/NUISANCEMC/
 Mount Options : :cached
 Run Command   : 'nuisancedevel'
 
-$ cp scripts/unpack.sh	$NUISANCE_MOUNT/unpack.sh
+[HostOS]$ cp scripts/unpack.sh	$NUISANCE_MOUNT/unpack.sh
 ```
 
 Next, we want to load up the dockerdevel environment and navigate to where we placed the "unpack" script.
 ```
-$ nuisancedevel
-[root@dea96e00379d NUISANCEMC]# ls
+[HostOS]$ nuisancedevel
+[DevlOS]# ls
 docker-devel   unpack.sh
 ```
 
 Running the unpack script should be enough to download everything required
 ```
-[root@dea96e00379d NUISANCEMC]# source unpack.sh
+[DevlOS]# source unpack.sh
 Downloading pre-built NUISANCE-docker-devel tarball to current directory
 --2017-11-04 13:31:38--  https://www.dropbox.com/s/jzrpjmi3blweetk/nuisance-v2r8-gcc4.8.5-centos7.tar.gz?dl=0
 
@@ -113,20 +113,20 @@ SADSAD
 With a working NUISANCE build, the "setupnuisance.sh" script located in the original unpacked folder will setup everything required to run NUISANCE after starting up the NUISANCE docker developer image.
 ```
 $ nuisancedevel
-[root@dea96e00379d NUISANCEMC]# ls
+[DevlOS]# ls
 docker-devel   nuisance-v2r8-gcc4.8.5-centos7   unpack
-[root@dea96e00379d NUISANCEMC]# cd nuisance-v2r8-gcc4.8.5-centos7
-[root@25a1cb41c517 nuisance-v2r8-gcc4.8.5-centos7]# ls
+[DevlOS]# cd nuisance-v2r8-gcc4.8.5-centos7
+[DevlOS]# ls
 lhapdf  libxml2-install  log4cpp  nuisance-v2r8  pythia6  R-2_12_6  root  scripts  setupnuisance.sh  v11q-reweight
-[root@25a1cb41c517 nuisance-v2r8-gcc4.8.5-centos7]# source setupnuisance.sh
+[DevlOS]# source setupnuisance.sh
 ```
 
 So to test you have a working build run the following commands
 ```
 $ nuisancedevel
-[root@dea96e00379d NUISANCEMC]#	cd nuisance-v2r8-gcc4.8.5-centos7
-[root@25a1cb41c517 nuisance-v2r8-gcc4.8.5-centos7]# source setupnuisance.sh
-[root@25a1cb41c517 nuisance-v2r8-gcc4.8.5-centos7]# nuiscomp -h
+[DevlOS]# cd nuisance-v2r8-gcc4.8.5-centos7
+[DevlOS]# source setupnuisance.sh
+[DevlOS]# nuiscomp -h
 ```
 
 ### Run Instructions
