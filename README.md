@@ -64,7 +64,10 @@ Successfully tagged nuisancemc/nuisancedevel:latest
 Finally, test the docker container actually runs by using the `nuisancedevel` alias. You should be able to see all the files inside your mount point from the starting working directory of the container.
 ```
 [HostOS]$ nuisancedevel
-[DevlOS]#
+[DevlOS]# pwd
+/Users/patrickstowell/NUISANCEMC/
+[DevlOS]# ls
+docker-devel
 ```
 
 ### Unpacking NUISANCE 
